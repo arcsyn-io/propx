@@ -20,8 +20,8 @@ package main
 
 import (
     "testing"
-    "github.com/lucaskalb/rapidx/prop"
-    "github.com/lucaskalb/rapidx/gen"
+    "github.com/lucaskalb/propx/prop"
+    "github.com/lucaskalb/propx/gen"
 )
 
 func TestAdditionIdentity(t *testing.T) {
@@ -36,7 +36,7 @@ func TestAdditionIdentity(t *testing.T) {
 ## Installation
 
 ```bash
-go get github.com/lucaskalb/rapidx
+go get github.com/lucaskalb/propx
 ```
 
 ## Documentation
@@ -53,30 +53,30 @@ RapidX supports several command-line flags for configuring property-based tests:
 
 | Flag | Description | Default |
 |------|-------------|---------|
-| `-rapidx.seed` | Random seed for test case generation (0 = random) | 0 |
-| `-rapidx.examples` | Number of test cases to generate | 100 |
-| `-rapidx.maxshrink` | Maximum number of shrinking steps | 400 |
-| `-rapidx.shrink.strategy` | Shrinking strategy: "bfs" or "dfs" | "bfs" |
-| `-rapidx.shrink.subtests` | Use Go's subtest functionality | true |
-| `-rapidx.shrink.parallel` | Number of parallel workers | 1 |
+| `-propx.seed` | Random seed for test case generation (0 = random) | 0 |
+| `-propx.examples` | Number of test cases to generate | 100 |
+| `-propx.maxshrink` | Maximum number of shrinking steps | 400 |
+| `-propx.shrink.strategy` | Shrinking strategy: "bfs" or "dfs" | "bfs" |
+| `-propx.shrink.subtests` | Use Go's subtest functionality | true |
+| `-propx.shrink.parallel` | Number of parallel workers | 1 |
 
 ### Usage Examples
 
 ```bash
 # Run with more test cases
-go test -rapidx.examples=1000
+go test -propx.examples=1000
 
 # Use depth-first shrinking strategy
-go test -rapidx.shrink.strategy=dfs
+go test -propx.shrink.strategy=dfs
 
 # Run with specific seed for reproducible results
-go test -rapidx.seed=12345
+go test -propx.seed=12345
 
 # Use parallel execution with 4 workers
-go test -rapidx.shrink.parallel=4
+go test -propx.shrink.parallel=4
 
 # Combine multiple flags
-go test -rapidx.examples=500 -rapidx.maxshrink=200 -rapidx.shrink.strategy=dfs -rapidx.shrink.parallel=2
+go test -propx.examples=500 -propx.maxshrink=200 -propx.shrink.strategy=dfs -propx.shrink.parallel=2
 ```
 
 ### Shrinking Strategies: BFS vs DFS
@@ -105,10 +105,10 @@ RapidX supports two different shrinking strategies, each with distinct character
 
 ```bash
 # Use BFS for debugging and understanding failures
-go test -rapidx.shrink.strategy=bfs
+go test -propx.shrink.strategy=bfs
 
 # Use DFS for finding the smallest possible counterexample
-go test -rapidx.shrink.strategy=dfs
+go test -propx.shrink.strategy=dfs
 ```
 
 **Recommendation**: Start with BFS (default) for most use cases, then try DFS if you need more aggressive shrinking.
@@ -119,12 +119,12 @@ When a property-based test fails, RapidX provides a command to reproduce the exa
 
 ```bash
 # Example output from a failed test:
-# [rapidx] property failed; seed=12345; examples_run=42; shrunk_steps=15
+# [propx] property failed; seed=12345; examples_run=42; shrunk_steps=15
 # counterexample (min): [1, 2, 3]
-# replay: go test -run '^TestMyProperty$/ex#l2(/|$)' -rapidx.seed=12345
+# replay: go test -run '^TestMyProperty$/ex#l2(/|$)' -propx.seed=12345
 
 # To reproduce the failure:
-go test -run '^TestMyProperty$/ex#l2(/|$)' -rapidx.seed=12345
+go test -run '^TestMyProperty$/ex#l2(/|$)' -propx.seed=12345
 ```
 
 ## Examples

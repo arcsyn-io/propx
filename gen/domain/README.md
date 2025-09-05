@@ -25,7 +25,7 @@ The CPF generator produces valid Brazilian CPF (Cadastro de Pessoas Físicas) nu
 #### Example Usage
 
 ```go
-import "github.com/lucaskalb/rapidx/gen/domain"
+import "github.com/lucaskalb/propx/gen/domain"
 
 // Generate unmasked CPF
 prop.ForAll(t, cfg, domain.CPF(false))(func(t *testing.T, cpf string) {

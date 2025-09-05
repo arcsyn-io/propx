@@ -66,7 +66,7 @@ Todos os testes neste pacote usam a build tag `demo` para permitir execução se
 ## Exemplos de Uso
 
 ### Para Desenvolvedores
-Use os testes de demonstração para entender como o rapidx funciona:
+Use os testes de demonstração para entender como o propx funciona:
 
 ```bash
 # Ver shrinking em ação

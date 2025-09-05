@@ -127,7 +127,7 @@ pop := func() (T, bool) {
 
 ### Configuration
 - Strategy is set globally via `SetShrinkStrategy()`
-- Can be configured via command-line flag: `-rapidx.shrink.strategy`
+- Can be configured via command-line flag: `-propx.shrink.strategy`
 - Default is BFS for predictable behavior
 
 ### Performance Characteristics

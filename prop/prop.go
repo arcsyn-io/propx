@@ -43,23 +43,23 @@ type Config struct {
 var (
 	// flagSeed sets the random seed for test case generation.
 	// Default: 0 (random seed based on current time).
-	flagSeed = flag.Int64("rapidx.seed", 0, "Random seed for test case generation")
+	flagSeed = flag.Int64("propx.seed", 0, "Random seed for test case generation")
 
 	// flagExamples sets the number of test cases to generate.
 	// Default: 100.
-	flagExamples = flag.Int("rapidx.examples", 100, "Number of test cases to generate")
+	flagExamples = flag.Int("propx.examples", 100, "Number of test cases to generate")
 
 	// flagMaxShrink sets the maximum number of shrinking steps.
 	// Default: 400.
-	flagMaxShrink = flag.Int("rapidx.maxshrink", 400, "Maximum number of shrinking steps")
+	flagMaxShrink = flag.Int("propx.maxshrink", 400, "Maximum number of shrinking steps")
 
 	// flagShrinkStrat sets the shrinking strategy.
 	// Default: "bfs" (breadth-first search).
-	flagShrinkStrat = flag.String("rapidx.shrink.strategy", "bfs", "Shrinking strategy (bfs or dfs)")
+	flagShrinkStrat = flag.String("propx.shrink.strategy", "bfs", "Shrinking strategy (bfs or dfs)")
 
 	// flagParallelism sets the number of parallel workers.
 	// Default: 1.
-	flagParallelism = flag.Int("rapidx.shrink.parallel", 1, "Number of parallel workers")
+	flagParallelism = flag.Int("propx.shrink.parallel", 1, "Number of parallel workers")
 )
 
 // Default returns a Config with default values based on command-line flags.
@@ -105,7 +105,7 @@ func ForAll[T any](t *testing.T, cfg Config, g gen.Generator[T]) func(func(*test
 		r := rand.New(rand.NewSource(seed)) // #nosec G404 -- Using math/rand for deterministic property-based testing
 		gen.SetShrinkStrategy(cfg.ShrinkStrat)
 
-		t.Logf("[rapidx] seed=%d examples=%d maxshrink=%d strategy=%s parallelism=%d",
+		t.Logf("[propx] seed=%d examples=%d maxshrink=%d strategy=%s parallelism=%d",
 			seed, cfg.Examples, cfg.MaxShrink, cfg.ShrinkStrat, cfg.Parallelism)
 
 		if cfg.Parallelism <= 1 {
@@ -151,8 +151,8 @@ func runSequential[T any](t *testing.T, cfg Config, g gen.Generator[T], body fun
 		}
 
 		full := fmt.Sprintf("^%s$/%s(/|$)", t.Name(), name)
-		t.Fatalf("[rapidx] property failed; seed=%d; examples_run=%d; shrunk_steps=%d\n"+
-			"counterexample (min): %#v\nreplay: go test -run '%s' -rapidx.seed=%d",
+		t.Fatalf("[propx] property failed; seed=%d; examples_run=%d; shrunk_steps=%d\n"+
+			"counterexample (min): %#v\nreplay: go test -run '%s' -propx.seed=%d",
 			seed, i+1, steps, min, full, seed)
 
 		if cfg.StopOnFirstFailure {
@@ -250,8 +250,8 @@ func runParallel[T any](t *testing.T, cfg Config, g gen.Generator[T], body func(
 	// Process failure results and report them
 	for failure := range failureChan {
 		full := fmt.Sprintf("^%s$/%s(/|$)", t.Name(), failure.name)
-		t.Fatalf("[rapidx] property failed; seed=%d; examples_run=%d; shrunk_steps=%d\n"+
-			"counterexample (min): %#v\nreplay: go test -run '%s' -rapidx.seed=%d",
+		t.Fatalf("[propx] property failed; seed=%d; examples_run=%d; shrunk_steps=%d\n"+
+			"counterexample (min): %#v\nreplay: go test -run '%s' -propx.seed=%d",
 			seed, failure.testIndex+1, failure.steps, failure.min, full, seed)
 
 		if cfg.StopOnFirstFailure {

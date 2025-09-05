@@ -3,7 +3,7 @@
 
 // Package demo contains demonstration tests that are designed to fail intentionally.
 // These tests showcase the shrinking mechanism and property-based testing capabilities
-// of the rapidx library. They are meant for educational and demonstration purposes.
+// of the propx library. They are meant for educational and demonstration purposes.
 package demo
 
 import (

@@ -12,7 +12,7 @@ YELLOW='\033[0;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-echo -e "${BLUE}🚀 Setting up development environment for rapidx${NC}"
+echo -e "${BLUE}🚀 Setting up development environment for propx${NC}"
 
 # Check if Go is installed
 if ! command -v go &> /dev/null; then

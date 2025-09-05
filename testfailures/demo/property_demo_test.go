@@ -9,9 +9,7 @@ package demo
 import (
 	"testing"
 
-	"arcsyn.io/propx/gen"
-	"arcsyn.io/propx/gen/domain"
-	"arcsyn.io/propx/prop"
+	"arcsyn.io/propx"
 )
 
 // Test_String_FalsaRegra demonstrates a property-based test that is designed to fail.
@@ -20,7 +18,7 @@ import (
 // when the property fails, helping developers understand why their assumptions are incorrect.
 func Test_String_FalsaRegra(t *testing.T) {
 
-	prop.ForAll(t, prop.Default(), gen.StringAlphaNum(gen.Size{Min: 0, Max: 32}))(
+	propx.ForAll(t, propx.Default(), propx.StringAlphaNum(propx.Size{Min: 0, Max: 32}))(
 		func(t *testing.T, s string) {
 			if s != "" {
 				t.Fatalf("expected empty string, got %q", s)
@@ -34,8 +32,8 @@ func Test_String_FalsaRegra(t *testing.T) {
 // valid CPF generation. This example shows how the shrinking mechanism will
 // find a minimal counterexample when the property fails.
 func Test_CPF_Invalid(t *testing.T) {
-	cfg := prop.Default()
-	prop.ForAll(t, cfg, domain.CPF(false))(func(t *testing.T, cpf string) {
+	cfg := propx.Default()
+	propx.ForAll(t, cfg, propx.CPF(false))(func(t *testing.T, cpf string) {
 		if cpf[0] != '9' {
 			t.Fatalf("expected to start with 9, but got %q", cpf)
 		}

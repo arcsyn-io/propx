@@ -10,14 +10,13 @@ import (
 	"math/rand"
 	"testing"
 
-	"arcsyn.io/propx/gen"
-	"arcsyn.io/propx/prop"
+	"arcsyn.io/propx"
 )
 
 // TestForAll_SequentialFailureCodePath tests the sequential failure code path.
 // This test verifies that the framework correctly handles failures in sequential mode.
 func TestForAll_SequentialFailureCodePath(t *testing.T) {
-	config := prop.Config{
+	config := propx.Config{
 		Seed:        12345,
 		Examples:    1,
 		MaxShrink:   2,
@@ -25,7 +24,7 @@ func TestForAll_SequentialFailureCodePath(t *testing.T) {
 		Parallelism: 1,
 	}
 
-	gen := gen.From(func(r *rand.Rand, sz gen.Size) (int, gen.Shrinker[int]) {
+	gen := propx.From(func(r *rand.Rand, sz propx.Size) (int, propx.Shrinker[int]) {
 		return 42, func(accept bool) (int, bool) {
 			return 0, false
 		}
@@ -33,7 +32,7 @@ func TestForAll_SequentialFailureCodePath(t *testing.T) {
 
 	t.Run("failure_test", func(st *testing.T) {
 		// This will trigger the failure path in runSequential
-		prop.ForAll(st, config, gen)(func(t *testing.T, val int) {
+		propx.ForAll(st, config, gen)(func(t *testing.T, val int) {
 			t.Errorf("This should fail: got %d", val)
 		})
 	})
@@ -42,7 +41,7 @@ func TestForAll_SequentialFailureCodePath(t *testing.T) {
 // TestForAll_SequentialFailureWithShrinking tests sequential failure with shrinking.
 // This test verifies that the framework correctly handles shrinking in sequential mode.
 func TestForAll_SequentialFailureWithShrinking(t *testing.T) {
-	config := prop.Config{
+	config := propx.Config{
 		Seed:        12345,
 		Examples:    1,
 		MaxShrink:   3,
@@ -51,7 +50,7 @@ func TestForAll_SequentialFailureWithShrinking(t *testing.T) {
 	}
 
 	shrinkerCallCount := 0
-	gen := gen.From(func(r *rand.Rand, sz gen.Size) (int, gen.Shrinker[int]) {
+	gen := propx.From(func(r *rand.Rand, sz propx.Size) (int, propx.Shrinker[int]) {
 		return 5, func(accept bool) (int, bool) {
 			shrinkerCallCount++
 			if shrinkerCallCount <= 2 {
@@ -61,7 +60,7 @@ func TestForAll_SequentialFailureWithShrinking(t *testing.T) {
 		}
 	})
 
-	prop.ForAll(t, config, gen)(func(t *testing.T, val int) {
+	propx.ForAll(t, config, gen)(func(t *testing.T, val int) {
 		t.Errorf("This should fail: got %d", val)
 	})
 }
@@ -69,7 +68,7 @@ func TestForAll_SequentialFailureWithShrinking(t *testing.T) {
 // TestForAll_SequentialFailureWithShrinkingAcceptance tests sequential failure
 // with shrinking and acceptance behavior.
 func TestForAll_SequentialFailureWithShrinkingAcceptance(t *testing.T) {
-	config := prop.Config{
+	config := propx.Config{
 		Seed:        12345,
 		Examples:    1,
 		MaxShrink:   5,
@@ -78,7 +77,7 @@ func TestForAll_SequentialFailureWithShrinkingAcceptance(t *testing.T) {
 	}
 
 	shrinkerCallCount := 0
-	gen := gen.From(func(r *rand.Rand, sz gen.Size) (int, gen.Shrinker[int]) {
+	gen := propx.From(func(r *rand.Rand, sz propx.Size) (int, propx.Shrinker[int]) {
 		return 10, func(accept bool) (int, bool) {
 			shrinkerCallCount++
 			if shrinkerCallCount <= 3 {
@@ -88,7 +87,7 @@ func TestForAll_SequentialFailureWithShrinkingAcceptance(t *testing.T) {
 		}
 	})
 
-	prop.ForAll(t, config, gen)(func(t *testing.T, val int) {
+	propx.ForAll(t, config, gen)(func(t *testing.T, val int) {
 		t.Errorf("This should fail: got %d", val)
 	})
 }
@@ -96,7 +95,7 @@ func TestForAll_SequentialFailureWithShrinkingAcceptance(t *testing.T) {
 // TestForAll_SequentialStopOnFirstFailureFalse tests sequential execution
 // with StopOnFirstFailure set to false.
 func TestForAll_SequentialStopOnFirstFailureFalse(t *testing.T) {
-	config := prop.Config{
+	config := propx.Config{
 		Seed:               12345,
 		Examples:           3,
 		MaxShrink:          2,
@@ -105,13 +104,13 @@ func TestForAll_SequentialStopOnFirstFailureFalse(t *testing.T) {
 		StopOnFirstFailure: false,
 	}
 
-	gen := gen.From(func(r *rand.Rand, sz gen.Size) (int, gen.Shrinker[int]) {
+	gen := propx.From(func(r *rand.Rand, sz propx.Size) (int, propx.Shrinker[int]) {
 		return 42, func(accept bool) (int, bool) {
 			return 0, false
 		}
 	})
 
-	prop.ForAll(t, config, gen)(func(t *testing.T, val int) {
+	propx.ForAll(t, config, gen)(func(t *testing.T, val int) {
 		t.Errorf("This should fail: got %d", val)
 	})
 }

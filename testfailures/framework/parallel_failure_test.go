@@ -10,14 +10,13 @@ import (
 	"math/rand"
 	"testing"
 
-	"arcsyn.io/propx/gen"
-	"arcsyn.io/propx/prop"
+	"arcsyn.io/propx"
 )
 
 // TestForAll_ParallelFailure tests failure scenarios in runParallel.
 // This test verifies that the framework correctly handles failures in parallel mode.
 func TestForAll_ParallelFailure(t *testing.T) {
-	config := prop.Config{
+	config := propx.Config{
 		Seed:        12345,
 		Examples:    3,
 		MaxShrink:   5,
@@ -25,14 +24,14 @@ func TestForAll_ParallelFailure(t *testing.T) {
 		Parallelism: 2,
 	}
 
-	gen := gen.From(func(r *rand.Rand, sz gen.Size) (int, gen.Shrinker[int]) {
+	gen := propx.From(func(r *rand.Rand, sz propx.Size) (int, propx.Shrinker[int]) {
 		return 42, func(accept bool) (int, bool) {
 			return 0, false
 		}
 	})
 
 	// This should fail and trigger the parallel failure path
-	prop.ForAll(t, config, gen)(func(t *testing.T, val int) {
+	propx.ForAll(t, config, gen)(func(t *testing.T, val int) {
 		t.Errorf("This should fail: got %d", val)
 	})
 }
@@ -40,7 +39,7 @@ func TestForAll_ParallelFailure(t *testing.T) {
 // TestForAll_ParallelFailureWithShrinking tests parallel failure with shrinking.
 // This test verifies that the framework correctly handles shrinking in parallel mode.
 func TestForAll_ParallelFailureWithShrinking(t *testing.T) {
-	config := prop.Config{
+	config := propx.Config{
 		Seed:        12345,
 		Examples:    2,
 		MaxShrink:   3,
@@ -49,7 +48,7 @@ func TestForAll_ParallelFailureWithShrinking(t *testing.T) {
 	}
 
 	shrinkerCallCount := 0
-	gen := gen.From(func(r *rand.Rand, sz gen.Size) (int, gen.Shrinker[int]) {
+	gen := propx.From(func(r *rand.Rand, sz propx.Size) (int, propx.Shrinker[int]) {
 		return 5, func(accept bool) (int, bool) {
 			shrinkerCallCount++
 			if shrinkerCallCount <= 2 {
@@ -60,7 +59,7 @@ func TestForAll_ParallelFailureWithShrinking(t *testing.T) {
 	})
 
 	// This should fail and trigger parallel shrinking
-	prop.ForAll(t, config, gen)(func(t *testing.T, val int) {
+	propx.ForAll(t, config, gen)(func(t *testing.T, val int) {
 		t.Errorf("This should fail: got %d", val)
 	})
 }
@@ -68,7 +67,7 @@ func TestForAll_ParallelFailureWithShrinking(t *testing.T) {
 // TestForAll_ParallelStopOnFirstFailureFalse tests parallel execution
 // with StopOnFirstFailure set to false.
 func TestForAll_ParallelStopOnFirstFailureFalse(t *testing.T) {
-	config := prop.Config{
+	config := propx.Config{
 		Seed:               12345,
 		Examples:           3,
 		MaxShrink:          2,
@@ -77,13 +76,13 @@ func TestForAll_ParallelStopOnFirstFailureFalse(t *testing.T) {
 		StopOnFirstFailure: false,
 	}
 
-	gen := gen.From(func(r *rand.Rand, sz gen.Size) (int, gen.Shrinker[int]) {
+	gen := propx.From(func(r *rand.Rand, sz propx.Size) (int, propx.Shrinker[int]) {
 		return 42, func(accept bool) (int, bool) {
 			return 0, false
 		}
 	})
 
-	prop.ForAll(t, config, gen)(func(t *testing.T, val int) {
+	propx.ForAll(t, config, gen)(func(t *testing.T, val int) {
 		t.Errorf("This should fail: got %d", val)
 	})
 }

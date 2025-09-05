@@ -9,7 +9,7 @@ package demo
 import (
 	"testing"
 
-	"arcsyn.io/propx/quick"
+	"arcsyn.io/propx"
 )
 
 // TestEqual_WithDifferentTypes tests the Equal function with different values
@@ -22,17 +22,17 @@ func TestEqual_WithDifferentTypes(t *testing.T) {
 
 	t.Run("different integers", func(t *testing.T) {
 		// This should fail because 42 != 43
-		quick.Equal(t, 42, 43)
+		propx.Equal(t, 42, 43)
 	})
 
 	t.Run("different strings", func(t *testing.T) {
 		// This should fail because "hello" != "world"
-		quick.Equal(t, "hello", "world")
+		propx.Equal(t, "hello", "world")
 	})
 
 	t.Run("different slices", func(t *testing.T) {
 		// This should fail because the slices have different elements
-		quick.Equal(t, []int{1, 2, 3}, []int{1, 2, 4})
+		propx.Equal(t, []int{1, 2, 3}, []int{1, 2, 4})
 	})
 }
 
@@ -45,6 +45,6 @@ func TestEqual_PointerComparison(t *testing.T) {
 		y := 42
 		// This will fail because pointers are different, but we test the function works
 		t.Skip("This test is expected to fail and is for demonstration purposes")
-		quick.Equal(t, &x, &y)
+		propx.Equal(t, &x, &y)
 	})
 }

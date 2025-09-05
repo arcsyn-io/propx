@@ -6,7 +6,7 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/arcsyn-io/propx/gen"
+	"arcsyn.io/propx/gen"
 )
 
 // CPF generates valid CPF numbers; masked controls the format.

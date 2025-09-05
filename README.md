@@ -20,14 +20,29 @@ package main
 
 import (
     "testing"
-    "arcsyn.io/propx/prop"
-    "arcsyn.io/propx/gen"
+    "arcsyn.io/propx"
 )
 
 func TestAdditionIdentity(t *testing.T) {
-    prop.ForAll(t, prop.Default(), gen.Int())(func(t *testing.T, x int) {
+    propx.ForAll(t, propx.Default(), propx.Int(propx.Size{Max: 100}))(func(t *testing.T, x int) {
         if x+0 != x {
             t.Errorf("addition identity failed for %d", x)
+        }
+    })
+}
+
+func TestStringLength(t *testing.T) {
+    propx.ForAll(t, propx.Default(), propx.StringAlpha(propx.Size{Max: 10}))(func(t *testing.T, s string) {
+        if len(s) > 10 {
+            t.Errorf("string too long: %q", s)
+        }
+    })
+}
+
+func TestCPFValidation(t *testing.T) {
+    propx.ForAll(t, propx.Default(), propx.CPF(false))(func(t *testing.T, cpf string) {
+        if !propx.ValidCPF(cpf) {
+            t.Errorf("invalid CPF generated: %q", cpf)
         }
     })
 }

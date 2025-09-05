@@ -20,8 +20,8 @@ package main
 
 import (
     "testing"
-    "github.com/arcsyn-io/propx/prop"
-    "github.com/arcsyn-io/propx/gen"
+    "arcsyn.io/propx/prop"
+    "arcsyn.io/propx/gen"
 )
 
 func TestAdditionIdentity(t *testing.T) {
@@ -36,7 +36,7 @@ func TestAdditionIdentity(t *testing.T) {
 ## Installation
 
 ```bash
-go get github.com/arcsyn-io/propx
+go get arcsyn.io/propx
 ```
 
 ## Documentation

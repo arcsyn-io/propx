@@ -9,8 +9,8 @@ package examples
 import (
 	"testing"
 
-	"github.com/arcsyn-io/propx/gen"
-	"github.com/arcsyn-io/propx/prop"
+	"arcsyn.io/propx/gen"
+	"arcsyn.io/propx/prop"
 )
 
 // Test_String_FalsaRegra demonstrates a property-based test that is designed to fail.

@@ -1,4 +1,4 @@
-module github.com/arcsyn-io/propx
+module arcsyn.io/propx
 
 go 1.24.3
 

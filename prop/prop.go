@@ -11,7 +11,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/arcsyn-io/propx/gen"
+	"arcsyn.io/propx/gen"
 )
 
 // Config holds the configuration for property-based testing.

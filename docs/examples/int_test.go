@@ -10,8 +10,8 @@ import (
 	"math/rand"
 	"testing"
 
-	"github.com/arcsyn-io/propx/gen"
-	"github.com/arcsyn-io/propx/prop"
+	"arcsyn.io/propx/gen"
+	"arcsyn.io/propx/prop"
 )
 
 // Test_Slice_SomaNaoNegativa demonstrates a property-based test with a custom generator

@@ -7,8 +7,8 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/arcsyn-io/propx/gen"
-	"github.com/arcsyn-io/propx/prop"
+	"arcsyn.io/propx/gen"
+	"arcsyn.io/propx/prop"
 )
 
 // BankAccount represents a simple bank account state machine.

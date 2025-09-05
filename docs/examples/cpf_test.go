@@ -9,9 +9,9 @@ package examples
 import (
 	"testing"
 
-	"github.com/arcsyn-io/propx/gen/domain"
-	"github.com/arcsyn-io/propx/prop"
-	"github.com/arcsyn-io/propx/quick"
+	"arcsyn.io/propx/gen/domain"
+	"arcsyn.io/propx/prop"
+	"arcsyn.io/propx/quick"
 )
 
 // Test_CPF_AlwaysValid demonstrates a property-based test for CPF generation.

@@ -7,8 +7,8 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/lucaskalb/rapidx/gen"
-	"github.com/lucaskalb/rapidx/prop"
+	"github.com/arcsyn-io/propx/gen"
+	"github.com/arcsyn-io/propx/prop"
 )
 
 // BankAccount represents a simple bank account state machine.

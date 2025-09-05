@@ -9,9 +9,9 @@ package demo
 import (
 	"testing"
 
-	"github.com/lucaskalb/rapidx/gen"
-	"github.com/lucaskalb/rapidx/gen/domain"
-	"github.com/lucaskalb/rapidx/prop"
+	"github.com/arcsyn-io/propx/gen"
+	"github.com/arcsyn-io/propx/gen/domain"
+	"github.com/arcsyn-io/propx/prop"
 )
 
 // Test_String_FalsaRegra demonstrates a property-based test that is designed to fail.

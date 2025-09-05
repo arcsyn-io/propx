@@ -10,8 +10,8 @@ import (
 	"math/rand"
 	"testing"
 
-	"github.com/lucaskalb/rapidx/gen"
-	"github.com/lucaskalb/rapidx/prop"
+	"github.com/arcsyn-io/propx/gen"
+	"github.com/arcsyn-io/propx/prop"
 )
 
 // TestForAll_SequentialFailureCodePath tests the sequential failure code path.

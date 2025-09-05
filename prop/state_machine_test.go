@@ -5,7 +5,7 @@ import (
 	"math/rand"
 	"testing"
 
-	"github.com/lucaskalb/rapidx/gen"
+	"github.com/arcsyn-io/propx/gen"
 )
 
 // TestStateMachineTypes tests the basic state machine type definitions.

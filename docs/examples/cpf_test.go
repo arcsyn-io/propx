@@ -9,9 +9,9 @@ package examples
 import (
 	"testing"
 
-	"github.com/lucaskalb/rapidx/gen/domain"
-	"github.com/lucaskalb/rapidx/prop"
-	"github.com/lucaskalb/rapidx/quick"
+	"github.com/arcsyn-io/propx/gen/domain"
+	"github.com/arcsyn-io/propx/prop"
+	"github.com/arcsyn-io/propx/quick"
 )
 
 // Test_CPF_AlwaysValid demonstrates a property-based test for CPF generation.

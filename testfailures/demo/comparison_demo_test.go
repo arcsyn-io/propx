@@ -9,7 +9,7 @@ package demo
 import (
 	"testing"
 
-	"github.com/lucaskalb/rapidx/quick"
+	"github.com/arcsyn-io/propx/quick"
 )
 
 // TestEqual_WithDifferentTypes tests the Equal function with different values

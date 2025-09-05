@@ -3,15 +3,14 @@
 
 // Package demo contains demonstration tests that are designed to fail intentionally.
 // These tests showcase the shrinking mechanism and property-based testing capabilities
-// of the rapidx library. They are meant for educational and demonstration purposes.
+// of the propx library. They are meant for educational and demonstration purposes.
 package demo
 
 import (
 	"math/rand"
 	"testing"
 
-	"github.com/lucaskalb/rapidx/gen"
-	"github.com/lucaskalb/rapidx/prop"
+	"arcsyn.io/propx"
 )
 
 // Test_Slice_SomaNaoNegativa demonstrates a property-based test with a custom generator
@@ -21,7 +20,7 @@ import (
 // and how the shrinking mechanism will find a minimal counterexample when the property fails.
 func Test_Slice_SomaNaoNegativa(t *testing.T) {
 	// False property: "slice sum is always 0"
-	ints := gen.From(func(r *rand.Rand, _ gen.Size) (int, gen.Shrinker[int]) {
+	ints := propx.From(func(r *rand.Rand, _ propx.Size) (int, propx.Shrinker[int]) {
 		if r == nil {
 			r = rand.New(rand.NewSource(rand.Int63())) // #nosec G404 -- Using math/rand for deterministic property-based testing
 		}
@@ -45,7 +44,7 @@ func Test_Slice_SomaNaoNegativa(t *testing.T) {
 		}
 	})
 
-	prop.ForAll(t, prop.Default(), gen.SliceOf(ints, gen.Size{Min: 0, Max: 16}))(
+	propx.ForAll(t, propx.Default(), propx.SliceOf(ints, propx.Size{Min: 0, Max: 16}))(
 		func(t *testing.T, xs []int) {
 			sum := 0
 			for _, x := range xs {

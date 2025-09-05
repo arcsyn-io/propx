@@ -1,4 +1,4 @@
-module github.com/lucaskalb/rapidx
+module arcsyn.io/propx
 
 go 1.24.3
 

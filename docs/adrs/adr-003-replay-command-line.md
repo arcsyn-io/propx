@@ -40,36 +40,36 @@ The system generates a complete `go test` command that can be used to reproduce 
 
 ```go
 full := fmt.Sprintf("^%s$/%s(/|$)", t.Name(), name)
-t.Fatalf("[rapidx] property failed; seed=%d; examples_run=%d; shrunk_steps=%d\n"+
-    "counterexample (min): %#v\nreplay: go test -run '%s' -rapidx.seed=%d",
+t.Fatalf("[propx] property failed; seed=%d; examples_run=%d; shrunk_steps=%d\n"+
+    "counterexample (min): %#v\nreplay: go test -run '%s' -propx.seed=%d",
     seed, i+1, steps, min, full, seed)
 ```
 
 #### 3. Command-Line Integration
 The replay functionality integrates with Go's standard testing flags:
 - `-run` flag to specify which test to run
-- `-rapidx.seed` flag to set the random seed
+- `-propx.seed` flag to set the random seed
 - Standard Go test flags for additional control
 
 ### Example Usage
 
 #### Test Failure Output
 ```
-[rapidx] property failed; seed=12345; examples_run=42; shrunk_steps=15
+[propx] property failed; seed=12345; examples_run=42; shrunk_steps=15
 counterexample (min): [1, 2, 3]
-replay: go test -run '^TestMyProperty$/ex#l2(/|$)' -rapidx.seed=12345
+replay: go test -run '^TestMyProperty$/ex#l2(/|$)' -propx.seed=12345
 ```
 
 #### Replay Commands
 ```bash
 # Reproduce the exact failure
-go test -run '^TestMyProperty$/ex#l2(/|$)' -rapidx.seed=12345
+go test -run '^TestMyProperty$/ex#l2(/|$)' -propx.seed=12345
 
 # Run with verbose output for debugging
-go test -run '^TestMyProperty$/ex#l2(/|$)' -rapidx.seed=12345 -v
+go test -run '^TestMyProperty$/ex#l2(/|$)' -propx.seed=12345 -v
 
 # Run with additional Go test flags
-go test -run '^TestMyProperty$/ex#l2(/|$)' -rapidx.seed=12345 -count=1 -failfast
+go test -run '^TestMyProperty$/ex#l2(/|$)' -propx.seed=12345 -count=1 -failfast
 ```
 
 ## Consequences
@@ -141,9 +141,9 @@ go test -run '^TestMyProperty$/ex#l2(/|$)' -rapidx.seed=12345 -count=1 -failfast
 ### Error Message Format
 The error message follows a consistent format:
 ```
-[rapidx] property failed; seed=<seed>; examples_run=<count>; shrunk_steps=<steps>
+[propx] property failed; seed=<seed>; examples_run=<count>; shrunk_steps=<steps>
 counterexample (min): <value>
-replay: go test -run '<pattern>' -rapidx.seed=<seed>
+replay: go test -run '<pattern>' -propx.seed=<seed>
 ```
 
 ### Integration with Go Testing
@@ -166,24 +166,24 @@ replay: go test -run '<pattern>' -rapidx.seed=<seed>
 go test ./...
 
 # Output:
-# [rapidx] property failed; seed=12345; examples_run=42; shrunk_steps=15
+# [propx] property failed; seed=12345; examples_run=42; shrunk_steps=15
 # counterexample (min): [1, 2, 3]
-# replay: go test -run 'TestMyProperty' -rapidx.seed=12345
+# replay: go test -run 'TestMyProperty' -propx.seed=12345
 
 # Reproduce the failure
-go test -run 'TestMyProperty' -rapidx.seed=12345
+go test -run 'TestMyProperty' -propx.seed=12345
 ```
 
 ### Advanced Replay
 ```bash
 # Reproduce with verbose output
-go test -run 'TestMyProperty' -rapidx.seed=12345 -v
+go test -run 'TestMyProperty' -propx.seed=12345 -v
 
 # Reproduce with specific package
-go test -run 'TestMyProperty' -rapidx.seed=12345 ./mypackage
+go test -run 'TestMyProperty' -propx.seed=12345 ./mypackage
 
 # Reproduce with additional flags
-go test -run 'TestMyProperty' -rapidx.seed=12345 -count=1 -failfast -race
+go test -run 'TestMyProperty' -propx.seed=12345 -count=1 -failfast -race
 ```
 
 ### CI/CD Integration

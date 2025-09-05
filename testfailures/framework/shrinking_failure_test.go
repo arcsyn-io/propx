@@ -10,14 +10,13 @@ import (
 	"math/rand"
 	"testing"
 
-	"github.com/lucaskalb/rapidx/gen"
-	"github.com/lucaskalb/rapidx/prop"
+	"arcsyn.io/propx"
 )
 
 // TestForAll_ShrinkingFailure tests the shrinking mechanism with intentional failures.
 // This test verifies that the framework correctly shrinks values when properties fail.
 func TestForAll_ShrinkingFailure(t *testing.T) {
-	config := prop.Config{
+	config := propx.Config{
 		Seed:        12345,
 		Examples:    1,
 		MaxShrink:   2,
@@ -25,13 +24,13 @@ func TestForAll_ShrinkingFailure(t *testing.T) {
 		Parallelism: 1,
 	}
 
-	gen := gen.From(func(r *rand.Rand, sz gen.Size) (int, gen.Shrinker[int]) {
+	gen := propx.From(func(r *rand.Rand, sz propx.Size) (int, propx.Shrinker[int]) {
 		return 42, func(accept bool) (int, bool) {
 			return 0, false
 		}
 	})
 
-	prop.ForAll(t, config, gen)(func(t *testing.T, val int) {
+	propx.ForAll(t, config, gen)(func(t *testing.T, val int) {
 		t.Errorf("This should fail: got %d", val)
 	})
 }

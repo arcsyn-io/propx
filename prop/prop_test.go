@@ -9,7 +9,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/lucaskalb/rapidx/gen"
+	"arcsyn.io/propx/gen"
 )
 
 // TestConfig_effectiveSeed tests the effectiveSeed method of Config.

@@ -6,7 +6,7 @@
 
 ## Context
 
-The rapidx project contains various types of tests, including tests that are designed to fail intentionally. These tests serve different purposes:
+The propx project contains various types of tests, including tests that are designed to fail intentionally. These tests serve different purposes:
 
 1. **Demonstration Tests**: Show how the framework works when properties fail
 2. **Framework Tests**: Verify the correct behavior of the framework in failure scenarios

@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/lucaskalb/rapidx/gen"
+	"arcsyn.io/propx/gen"
 )
 
 func TestCPF(t *testing.T) {

@@ -1,7 +1,7 @@
 //go:build examples
 // +build examples
 
-// Package examples demonstrates how to use the rapidx property-based testing library.
+// Package examples demonstrates how to use the propx property-based testing library.
 // These examples show various testing patterns and how the shrinking mechanism
 // helps find minimal counterexamples when properties fail.
 package examples
@@ -9,23 +9,21 @@ package examples
 import (
 	"testing"
 
-	"github.com/lucaskalb/rapidx/gen/domain"
-	"github.com/lucaskalb/rapidx/prop"
-	"github.com/lucaskalb/rapidx/quick"
+	"arcsyn.io/propx"
 )
 
 // Test_CPF_AlwaysValid demonstrates a property-based test for CPF generation.
 // This test verifies that all generated CPF numbers are valid according to
 // the CPF validation algorithm, and that the UnmaskCPF function is idempotent.
 func Test_CPF_AlwaysValid(t *testing.T) {
-	cfg := prop.Default()
-	prop.ForAll(t, cfg, domain.CPF(false))(func(t *testing.T, cpf string) {
-		if !domain.ValidCPF(cpf) {
+	cfg := propx.Default()
+	propx.ForAll(t, cfg, propx.CPF(false))(func(t *testing.T, cpf string) {
+		if !propx.ValidCPF(cpf) {
 			t.Fatalf("valid CPF generated was rejected: %q", cpf)
 		}
-		n1 := domain.UnmaskCPF(cpf)
-		n2 := domain.UnmaskCPF(n1)
-		quick.Equal(t, n1, n2)
+		n1 := propx.UnmaskCPF(cpf)
+		n2 := propx.UnmaskCPF(n1)
+		propx.Equal(t, n1, n2)
 	})
 }
 
@@ -33,10 +31,10 @@ func Test_CPF_AlwaysValid(t *testing.T) {
 // of CPF masking and unmasking operations. This test verifies that
 // unmasking a masked CPF and then masking it again produces the same result.
 func Test_CPF_MaskUnmaskRoundTrip(t *testing.T) {
-	prop.ForAll(t, prop.Default(), domain.CPF(true))(func(t *testing.T, masked string) {
-		raw := domain.UnmaskCPF(masked)
-		back := domain.UnmaskCPF(domain.MaskCPF(raw))
-		quick.Equal(t, raw, back)
+	propx.ForAll(t, propx.Default(), propx.CPF(true))(func(t *testing.T, masked string) {
+		raw := propx.UnmaskCPF(masked)
+		back := propx.UnmaskCPF(propx.MaskCPF(raw))
+		propx.Equal(t, raw, back)
 	})
 }
 
@@ -44,8 +42,8 @@ func Test_CPF_MaskUnmaskRoundTrip(t *testing.T) {
 // CPF numbers with random masking (50/50 chance of masked or unmasked).
 // This test verifies that all generated CPF numbers are valid regardless of format.
 func Test_CPF_Any_Valid(t *testing.T) {
-	prop.ForAll(t, prop.Default(), domain.CPFAny())(func(t *testing.T, s string) {
-		if !domain.ValidCPF(s) {
+	propx.ForAll(t, propx.Default(), propx.CPFAny())(func(t *testing.T, s string) {
+		if !propx.ValidCPF(s) {
 			t.Fatalf("valid CPF generated was rejected: %q", s)
 		}
 	})
@@ -56,8 +54,8 @@ func Test_CPF_Any_Valid(t *testing.T) {
 // valid CPF generation. This example shows how the shrinking mechanism will
 // find a minimal counterexample when the property fails.
 func Test_CPF_Invalid(t *testing.T) {
-	cfg := prop.Default()
-	prop.ForAll(t, cfg, domain.CPF(false))(func(t *testing.T, cpf string) {
+	cfg := propx.Default()
+	propx.ForAll(t, cfg, propx.CPF(false))(func(t *testing.T, cpf string) {
 		if cpf[0] != '9' {
 			t.Fatalf("expected to start with 9, but got %q", cpf)
 		}

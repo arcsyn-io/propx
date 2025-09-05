@@ -11,6 +11,9 @@ on:
         required: true
         type: string
 
+permissions:
+  contents: write
+
 jobs:
   release:
     name: Release
@@ -62,11 +65,11 @@ jobs:
           ## Installation
           
           ```bash
-          go get github.com/lucaskalb/rapidx@${{ github.ref_name || github.event.inputs.version }}
+          go get arcsyn.io/propx@${{ github.ref_name || github.event.inputs.version }}
           ```
           
           ## Documentation
           
-          See the [README](https://github.com/lucaskalb/rapidx/blob/main/README.md) for usage examples.
+          See the [README](https://github.com/arcsyn/propx/blob/main/README.md) for usage examples.
         draft: false
         prerelease: false

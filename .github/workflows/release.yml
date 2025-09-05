@@ -51,7 +51,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ github.ref_name || github.event.inputs.version }}
+        tag_name: ${{ github.event.inputs.version || github.ref_name }}
         release_name: ${{ steps.changelog.outputs.changelog }}
         body: |
           ## Changes
@@ -65,7 +65,7 @@ jobs:
           ## Installation
           
           ```bash
-          go get arcsyn.io/propx@${{ github.ref_name || github.event.inputs.version }}
+          go get arcsyn.io/propx@${{ github.event.inputs.version || github.ref_name }}
           ```
           
           ## Documentation

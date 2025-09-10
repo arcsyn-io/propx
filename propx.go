@@ -1,3 +1,6 @@
+// Copyright (c) 2024 PropX. All rights reserved.
+// Use of this source code is governed by a MIT license that can be found in the LICENSE file.
+//
 // Package propx provides property-based testing functionality for Go.
 // It allows you to test properties of your code by generating random test cases
 // and automatically shrinking counterexamples when failures are found.

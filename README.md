@@ -2,6 +2,10 @@
 
 PropX is a property-based testing library for Go that allows you to test properties of your code by generating random test cases and automatically shrinking counterexamples when failures are found.
 
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
 ## Features
 
 - **Property-based testing** with automatic test case generation
@@ -43,6 +47,18 @@ func TestCPFValidation(t *testing.T) {
     propx.ForAll(t, propx.Default(), propx.CPF(false))(func(t *testing.T, cpf string) {
         if !propx.ValidCPF(cpf) {
             t.Errorf("invalid CPF generated: %q", cpf)
+        }
+    })
+}
+
+func TestAdditionCommutativity(t *testing.T) {
+    propx.ForAll(t, propx.Default(), 
+        propx.Int(propx.Size{Max: 1000}), 
+        propx.Int(propx.Size{Max: 1000}),
+    )(func(t *testing.T, a, b int) {
+        if a+b != b+a {
+            t.Errorf("addition is not commutative: %d + %d = %d, but %d + %d = %d", 
+                a, b, a+b, b, a, b+a)
         }
     })
 }

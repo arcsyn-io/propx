@@ -5,7 +5,7 @@ Accepted
 
 ## Context
 
-RapidX implements intelligent shrinking to find minimal counterexamples when property-based tests fail. The shrinking process needs to explore a tree of possible smaller candidates, and we need to decide how to traverse this tree to find the best counterexample.
+PropX implements intelligent shrinking to find minimal counterexamples when property-based tests fail. The shrinking process needs to explore a tree of possible smaller candidates, and we need to decide how to traverse this tree to find the best counterexample.
 
 ### Key Requirements
 - Find minimal counterexamples efficiently

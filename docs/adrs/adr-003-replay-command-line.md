@@ -28,7 +28,7 @@ Without replay functionality:
 ### Implementation Details
 
 #### 1. Seed Capture and Reporting
-When a property-based test fails, RapidX captures and reports:
+When a property-based test fails, PropX captures and reports:
 - The random seed used for test generation
 - The number of examples run before failure
 - The number of shrinking steps performed

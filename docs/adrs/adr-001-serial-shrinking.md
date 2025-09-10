@@ -5,7 +5,7 @@ Accepted
 
 ## Context
 
-RapidX implements property-based testing with automatic test case generation and intelligent shrinking of counterexamples. The library supports parallel execution of test cases to improve performance, but faces a design decision regarding how to handle the shrinking process when tests run in parallel.
+PropX implements property-based testing with automatic test case generation and intelligent shrinking of counterexamples. The library supports parallel execution of test cases to improve performance, but faces a design decision regarding how to handle the shrinking process when tests run in parallel.
 
 ### Key Requirements
 - Generate multiple test cases in parallel for better performance

@@ -1,6 +1,6 @@
 # State Machine Testing
 
-RapidX now supports state machine testing using property-based testing. This functionality allows you to test systems with stateful behavior in a systematic and comprehensive way.
+PropX now supports state machine testing using property-based testing. This functionality allows you to test systems with stateful behavior in a systematic and comprehensive way.
 
 ## Basic Concepts
 
@@ -391,13 +391,13 @@ The system provides detailed information about failures:
 - **Skipped Commands**: List of commands that were skipped and why
 - **Minimal Sequence**: Minimal sequence that reproduces the error after shrinking
 
-## Integration with RapidX
+## Integration with PropX
 
-The state machine system is fully integrated with RapidX:
+The state machine system is fully integrated with PropX:
 
-- **Generators**: Uses all existing RapidX generators
-- **Shrinking**: Integrated with RapidX's shrinking system
+- **Generators**: Uses all existing PropX generators
+- **Shrinking**: Integrated with PropX's shrinking system
 - **Configuration**: Uses the same configuration structure
-- **Flags**: Supports all RapidX command-line flags
+- **Flags**: Supports all PropX command-line flags
 
-For more information about generators and other RapidX features, see the main project documentation.
+For more information about generators and other PropX features, see the main project documentation.

@@ -1,6 +1,6 @@
 # Architecture Decision Records (ADRs)
 
-This directory contains Architecture Decision Records (ADRs) for the RapidX project. ADRs document important architectural decisions, the context in which they were made, and their consequences.
+This directory contains Architecture Decision Records (ADRs) for the PropX project. ADRs document important architectural decisions, the context in which they were made, and their consequences.
 
 ## What are ADRs?
 
@@ -24,7 +24,7 @@ Architecture Decision Records are documents that capture important architectural
   - Proposes the implementation of state machine testing capabilities
   - Explains the API design and implementation approach for testing stateful systems
 
-- [ADR-005: Simple State Machine Testing](adr-005-intentional-test-failures-organization.md)
+- [ADR-005: Organization of Tests with Intentional Failures](adr-005-intentional-test-failures-organization.md)
   - Proposes the implementation of state machine testing capabilities
   - Explains the API design and implementation approach for testing stateful systems
 

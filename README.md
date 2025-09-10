@@ -1,6 +1,6 @@
-# RapidX
+# PropX
 
-RapidX is a property-based testing library for Go that allows you to test properties of your code by generating random test cases and automatically shrinking counterexamples when failures are found.
+PropX is a property-based testing library for Go that allows you to test properties of your code by generating random test cases and automatically shrinking counterexamples when failures are found.
 
 ## Features
 
@@ -64,7 +64,7 @@ go get arcsyn.io/propx
 
 ## Command Line Flags
 
-RapidX supports several command-line flags for configuring property-based tests:
+PropX supports several command-line flags for configuring property-based tests:
 
 | Flag | Description | Default |
 |------|-------------|---------|
@@ -96,7 +96,7 @@ go test -propx.examples=500 -propx.maxshrink=200 -propx.shrink.strategy=dfs -pro
 
 ### Shrinking Strategies: BFS vs DFS
 
-RapidX supports two different shrinking strategies, each with distinct characteristics:
+PropX supports two different shrinking strategies, each with distinct characteristics:
 
 #### BFS (Breadth-First Search) - Default
 - **Behavior**: Explores all candidates at the current "level" before moving deeper
@@ -130,7 +130,7 @@ go test -propx.shrink.strategy=dfs
 
 ### Reproducing Failed Tests
 
-When a property-based test fails, RapidX provides a command to reproduce the exact failure:
+When a property-based test fails, PropX provides a command to reproduce the exact failure:
 
 ```bash
 # Example output from a failed test:

@@ -11,7 +11,7 @@ Property-based testing is excellent for testing individual functions and data tr
 - Test stateful systems with property-based testing
 - Provide simple, intuitive API for state machine testing
 - Support common state machine patterns
-- Maintain compatibility with existing RapidX generators
+- Maintain compatibility with existing PropX generators
 - Enable shrinking of state machine sequences
 - Support both deterministic and non-deterministic state machines
 
@@ -127,7 +127,7 @@ func TestBankAccount(t *testing.T) {
 ### Implementation Details
 
 #### 1. Command Sequence Generation
-- Generate sequences of commands using existing RapidX generators
+- Generate sequences of commands using existing PropX generators
 - Support weighted command selection for realistic test scenarios
 - Allow custom sequence length control
 
@@ -153,7 +153,7 @@ func TestBankAccount(t *testing.T) {
 - **Bug Discovery**: Find edge cases in state transitions
 - **Reproducible Failures**: Shrinking provides minimal failing sequences
 - **Intuitive API**: Simple, declarative state machine definition
-- **Integration**: Works seamlessly with existing RapidX generators
+- **Integration**: Works seamlessly with existing PropX generators
 - **Flexibility**: Support various state machine patterns
 
 ### Negative
@@ -177,7 +177,7 @@ func TestBankAccount(t *testing.T) {
 - Limited control over shrinking behavior
 - Potential API conflicts
 - Additional dependencies
-- Less integration with RapidX ecosystem
+- Less integration with PropX ecosystem
 
 ### 2. Manual State Management
 **Approach**: Provide utilities for manual state management in tests.

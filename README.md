@@ -2,10 +2,6 @@
 
 PropX is a property-based testing library for Go that allows you to test properties of your code by generating random test cases and automatically shrinking counterexamples when failures are found.
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## Features
 
 - **Property-based testing** with automatic test case generation
@@ -24,6 +20,14 @@ go get arcsyn.io/propx
 ```
 
 ## Quick Start
+
+Follow these simple steps to get started with PropX:
+
+### Step 1: Create a test file
+Create a new file called `example_test.go` in your project directory.
+
+### Step 2: Add the test code
+Copy and paste the following code into your test file:
 
 ```go
 package main
@@ -47,49 +51,44 @@ func TestAdditionCommutativity(t *testing.T) {
 
 ```
 
-Run `go `
+### Step 3: Run the tests
+Execute the tests using the standard Go test command:
 
-### Example
+```bash
+# Run all tests
+go test
 
-```go
-func TestEmailValidation(t *testing.T) {
-    propx.ForAll(t, propx.Default(), propx.StringAlpha(propx.Size{Min: 1, Max: 20}))(func(t *testing.T, username string) {
-        propx.ForAll(t, propx.Default(), propx.StringAlpha(propx.Size{Min: 2, Max: 10}))(func(t *testing.T, domain string) {
-            email := username + "@" + domain + ".com"
-            
-            // Test that our email validation function works correctly
-            if !isValidEmail(email) {
-                t.Errorf("valid email rejected: %s", email)
-            }
-            
-            // Test that emails without @ are rejected
-            invalidEmail := username + domain + ".com"
-            if isValidEmail(invalidEmail) {
-                t.Errorf("invalid email accepted: %s", invalidEmail)
-            }
-        })
-    })
-}
+# Run tests with verbose output to see individual test cases
+go test -v
 
-// Helper function for email validation
-func isValidEmail(email string) bool {
-    if len(email) < 5 { // minimum: a@b.c
-        return false
-    }
-    
-    atCount := 0
-    for _, char := range email {
-        if char == '@' {
-            atCount++
-        }
-    }
-    
-    return atCount == 1 && 
-           email[0] != '@' && 
-           email[len(email)-1] != '@' &&
-           len(email) > 0
-}
+# Run a specific test
+go test -run TestAdditionCommutativity
+
+# Run tests with custom PropX configuration
+go test -propx.examples=1000 -propx.maxshrink=50
 ```
+
+### Step 4: Understanding the output
+When you run the tests, PropX will:
+- Generate random test cases automatically
+- Run each test case to verify the property
+- If a test fails, it will shrink the input to find a minimal counterexample
+- Report the results with clear error messages
+
+That's it! You're now ready to use PropX for property-based testing in your Go projects.
+
+## Command Line Flags
+
+PropX supports several command-line flags for configuring property-based tests:
+
+| Flag | Description | Default |
+|------|-------------|---------|
+| `-propx.seed` | Random seed for test case generation (0 = random) | 0 |
+| `-propx.examples` | Number of test cases to generate | 100 |
+| `-propx.maxshrink` | Maximum number of shrinking steps | 400 |
+| `-propx.shrink.strategy` | Shrinking strategy: "bfs" or "dfs" | "bfs" |
+| `-propx.shrink.subtests` | Use Go's subtest functionality | true |
+| `-propx.shrink.parallel` | Number of parallel workers | 1 |
 
 ### Usage Examples
 
@@ -109,19 +108,6 @@ go test -propx.shrink.parallel=4
 # Combine multiple flags
 go test -propx.examples=500 -propx.maxshrink=200 -propx.shrink.strategy=dfs -propx.shrink.parallel=2
 ```
-
-## Command Line Flags
-
-PropX supports several command-line flags for configuring property-based tests:
-
-| Flag | Description | Default |
-|------|-------------|---------|
-| `-propx.seed` | Random seed for test case generation (0 = random) | 0 |
-| `-propx.examples` | Number of test cases to generate | 100 |
-| `-propx.maxshrink` | Maximum number of shrinking steps | 400 |
-| `-propx.shrink.strategy` | Shrinking strategy: "bfs" or "dfs" | "bfs" |
-| `-propx.shrink.subtests` | Use Go's subtest functionality | true |
-| `-propx.shrink.parallel` | Number of parallel workers | 1 |
 
 ## State Machine Testing
 - See [State Machine Testing Doc](docs/state-machine.md) - Testing stateful systems

@@ -38,12 +38,12 @@ import (
 )
 
 func TestAdditionCommutativity(t *testing.T) {
-    propx.ForAll(t, propx.Default(), 
-        propx.Int(propx.Size{Max: 1000}), 
+    propx.ForAll(t, propx.Default(),
+        propx.Int(propx.Size{Max: 1000}),
         propx.Int(propx.Size{Max: 1000}),
     )(func(t *testing.T, a, b int) {
         if a+b != b+a {
-            t.Errorf("addition is not commutative: %d + %d = %d, but %d + %d = %d", 
+            t.Errorf("addition is not commutative: %d + %d = %d, but %d + %d = %d",
                 a, b, a+b, b, a, b+a)
         }
     })
@@ -159,7 +159,6 @@ go test -propx.shrink.strategy=dfs
 ```
 
 > **Recommendation**: Start with BFS (default) for most use cases, then try DFS if you need more aggressive shrinking.
-
 
 ## Examples
 

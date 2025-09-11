@@ -77,6 +77,20 @@ When you run the tests, PropX will:
 
 That's it! You're now ready to use PropX for property-based testing in your Go projects.
 
+### Reproducing Failed Tests
+
+When a property-based test fails, PropX provides a command to reproduce the exact failure:
+
+```bash
+# Example output from a failed test:
+[propx] property failed; seed=12345; examples_run=42; shrunk_steps=15
+counterexample (min): [1, 2, 3]
+replay: go test -run '^TestMyProperty$/ex#l2(/|$)' -propx.seed=12345
+
+# To reproduce the failure:
+go test -run '^TestMyProperty$/ex#l2(/|$)' -propx.seed=12345
+```
+
 ## Command Line Flags
 
 PropX supports several command-line flags for configuring property-based tests:
@@ -144,21 +158,8 @@ go test -propx.shrink.strategy=bfs
 go test -propx.shrink.strategy=dfs
 ```
 
-**Recommendation**: Start with BFS (default) for most use cases, then try DFS if you need more aggressive shrinking.
+> **Recommendation**: Start with BFS (default) for most use cases, then try DFS if you need more aggressive shrinking.
 
-### Reproducing Failed Tests
-
-When a property-based test fails, PropX provides a command to reproduce the exact failure:
-
-```bash
-# Example output from a failed test:
-# [propx] property failed; seed=12345; examples_run=42; shrunk_steps=15
-# counterexample (min): [1, 2, 3]
-# replay: go test -run '^TestMyProperty$/ex#l2(/|$)' -propx.seed=12345
-
-# To reproduce the failure:
-go test -run '^TestMyProperty$/ex#l2(/|$)' -propx.seed=12345
-```
 
 ## Examples
 

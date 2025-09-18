@@ -224,6 +224,41 @@ func Bind[A, B any](ga gen.Generator[A], f func(A) gen.Generator[B]) gen.Generat
 }
 
 // =============================================================================
+// PAIR GENERATORS
+// =============================================================================
+
+// Pair represents a pair of values of types A and B.
+type Pair[A, B any] = gen.Pair[A, B]
+
+// PairOf creates a generator that produces pairs of values from two generators.
+// The generated pairs will have shrinking capabilities that try to shrink both
+// components independently.
+//
+// Example usage:
+//
+//	// Generate pairs of integers
+//	pairGen := propx.PairOf(propx.Int(propx.Size{}), propx.Int(propx.Size{}))
+//	
+//	// Use in property-based testing
+//	propx.ForAll(t, cfg, pairGen)(func(t *testing.T, p propx.Pair[int, int]) {
+//		// Test property using p.First and p.Second
+//		if p.First+p.Second != p.Second+p.First {
+//			t.Errorf("addition is not commutative for (%d, %d)", p.First, p.Second)
+//		}
+//	})
+func PairOf[A, B any](ga gen.Generator[A], gb gen.Generator[B]) gen.Generator[Pair[A, B]] {
+	return gen.PairOf(ga, gb)
+}
+
+// Tuple is an alias for Pair for better readability in some contexts.
+type Tuple[A, B any] = gen.Tuple[A, B]
+
+// TupleOf is an alias for PairOf for better readability in some contexts.
+func TupleOf[A, B any](ga gen.Generator[A], gb gen.Generator[B]) gen.Generator[Tuple[A, B]] {
+	return gen.TupleOf(ga, gb)
+}
+
+// =============================================================================
 // CUSTOM GENERATORS
 // =============================================================================
 

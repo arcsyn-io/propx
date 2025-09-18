@@ -19,7 +19,7 @@ type Pair[A, B any] struct {
 //
 //	// Generate pairs of integers
 //	pairGen := gen.PairOf(gen.Int(), gen.Int())
-//	
+//
 //	// Use in property-based testing
 //	propx.ForAll(t, cfg, pairGen)(func(t *testing.T, p gen.Pair[int, int]) {
 //		// Test property using p.First and p.Second
@@ -32,19 +32,19 @@ func PairOf[A, B any](ga Generator[A], gb Generator[B]) Generator[Pair[A, B]] {
 		if r == nil {
 			r = rand.New(rand.NewSource(rand.Int63())) // #nosec G404 -- Using math/rand for deterministic property-based testing
 		}
-		
+
 		// Generate both values
 		a, sa := ga.Generate(r, sz)
 		b, sb := gb.Generate(r, sz)
-		
+
 		pair := Pair[A, B]{First: a, Second: b}
-		
+
 		// Shrinker strategy: try shrinking both components
 		// First try shrinking the first component, then the second
 		shrinkingFirst := true
 		currentA := a
 		currentB := b
-		
+
 		return pair, func(accept bool) (Pair[A, B], bool) {
 			if shrinkingFirst {
 				// Try shrinking the first component
@@ -56,13 +56,13 @@ func PairOf[A, B any](ga Generator[A], gb Generator[B]) Generator[Pair[A, B]] {
 				shrinkingFirst = false
 				accept = false // Reset accept for second component
 			}
-			
+
 			// Try shrinking the second component
 			if nb, ok := sb(accept); ok {
 				currentB = nb
 				return Pair[A, B]{First: currentA, Second: nb}, true
 			}
-			
+
 			// Both components exhausted
 			var zero Pair[A, B]
 			return zero, false

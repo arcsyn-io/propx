@@ -238,7 +238,7 @@ type Pair[A, B any] = gen.Pair[A, B]
 //
 //	// Generate pairs of integers
 //	pairGen := propx.PairOf(propx.Int(propx.Size{}), propx.Int(propx.Size{}))
-//	
+//
 //	// Use in property-based testing
 //	propx.ForAll(t, cfg, pairGen)(func(t *testing.T, p propx.Pair[int, int]) {
 //		// Test property using p.First and p.Second

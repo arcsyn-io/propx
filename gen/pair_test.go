@@ -10,15 +10,15 @@ func TestPairOf_Generation(t *testing.T) {
 	// Create generators for int and string
 	intGen := IntRange(1, 100) // Use IntRange for exact bounds
 	strGen := StringAlpha(Size{Min: 1, Max: 10})
-	
+
 	// Create pair generator
 	pairGen := PairOf(intGen, strGen)
-	
+
 	// Generate some pairs
 	r := rand.New(rand.NewSource(42))
 	for i := 0; i < 10; i++ {
 		pair, shrinker := pairGen.Generate(r, Size{})
-		
+
 		// Check that the pair has valid values
 		if pair.First < 1 || pair.First > 100 {
 			t.Errorf("First component out of range: %d", pair.First)
@@ -26,7 +26,7 @@ func TestPairOf_Generation(t *testing.T) {
 		if len(pair.Second) < 1 || len(pair.Second) > 10 {
 			t.Errorf("Second component length out of range: %d", len(pair.Second))
 		}
-		
+
 		// Check that shrinker is not nil
 		if shrinker == nil {
 			t.Error("Shrinker should not be nil")
@@ -46,7 +46,7 @@ func TestPairOf_Shrinking(t *testing.T) {
 			return 0, false
 		}
 	})
-	
+
 	strGen := From(func(r *rand.Rand, sz Size) (string, Shrinker[string]) {
 		val := "hello" // Start with "hello"
 		return val, func(accept bool) (string, bool) {
@@ -57,16 +57,16 @@ func TestPairOf_Shrinking(t *testing.T) {
 			return "", false
 		}
 	})
-	
+
 	pairGen := PairOf(intGen, strGen)
 	r := rand.New(rand.NewSource(42))
-	
+
 	pair, shrinker := pairGen.Generate(r, Size{})
-	
+
 	// Test shrinking
 	originalFirst := pair.First
 	originalSecond := pair.Second
-	
+
 	// First shrink should affect the first component
 	shrunkPair, ok := shrinker(true)
 	if !ok {
@@ -78,7 +78,7 @@ func TestPairOf_Shrinking(t *testing.T) {
 	if shrunkPair.Second != originalSecond {
 		t.Errorf("Expected second component to remain %q, got %q", originalSecond, shrunkPair.Second)
 	}
-	
+
 	// Continue shrinking first component until exhausted
 	for i := 0; i < 15; i++ {
 		shrunkPair, ok = shrinker(true)
@@ -89,7 +89,7 @@ func TestPairOf_Shrinking(t *testing.T) {
 			t.Errorf("Expected first component to continue shrinking, got %d", shrunkPair.First)
 		}
 	}
-	
+
 	// Now try to shrink again - should start working on second component
 	shrunkPair, ok = shrinker(true)
 	if ok {
@@ -104,12 +104,12 @@ func TestPairOf_EmptyShrinking(t *testing.T) {
 	// Create generators that don't shrink
 	constGen := Const(42)
 	constStrGen := Const("test")
-	
+
 	pairGen := PairOf(constGen, constStrGen)
 	r := rand.New(rand.NewSource(42))
-	
+
 	_, shrinker := pairGen.Generate(r, Size{})
-	
+
 	// Shrinking should fail immediately
 	_, ok := shrinker(true)
 	if ok {
@@ -121,16 +121,16 @@ func TestTupleOf_Alias(t *testing.T) {
 	// Test that TupleOf is equivalent to PairOf
 	intGen := Int(Size{Min: 1, Max: 10})
 	strGen := StringAlpha(Size{Min: 1, Max: 5})
-	
+
 	pairGen := PairOf(intGen, strGen)
 	tupleGen := TupleOf(intGen, strGen)
-	
+
 	r1 := rand.New(rand.NewSource(42))
 	r2 := rand.New(rand.NewSource(42))
-	
+
 	pair, _ := pairGen.Generate(r1, Size{})
 	tuple, _ := tupleGen.Generate(r2, Size{})
-	
+
 	// They should generate equivalent values
 	if pair.First != tuple.First {
 		t.Errorf("Pair and Tuple should generate same first component: %d vs %d", pair.First, tuple.First)
@@ -144,12 +144,12 @@ func TestPair_StructAccess(t *testing.T) {
 	// Test that we can access the fields of the Pair struct
 	intGen := Int(Size{Min: 1, Max: 10})
 	strGen := StringAlpha(Size{Min: 1, Max: 5})
-	
+
 	pairGen := PairOf(intGen, strGen)
 	r := rand.New(rand.NewSource(42))
-	
+
 	pair, _ := pairGen.Generate(r, Size{})
-	
+
 	// Test field access
 	if pair.First == 0 {
 		t.Error("First field should not be zero")

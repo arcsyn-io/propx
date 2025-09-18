@@ -42,7 +42,7 @@ func TestPairMultiplicationAssociativity(t *testing.T) {
 		c := 2
 		left := (p.First * p.Second) * c
 		right := p.First * (p.Second * c)
-		
+
 		if left != right {
 			t.Errorf("multiplication is not associative for (%d, %d) with c=%d: (%d * %d) * %d = %d, but %d * (%d * %d) = %d",
 				p.First, p.Second, c,
@@ -64,7 +64,7 @@ func TestPairStringConcatenation(t *testing.T) {
 		// Property: concatenation length is sum of individual lengths
 		concatenated := p.First + p.Second
 		expectedLength := len(p.First) + len(p.Second)
-		
+
 		if len(concatenated) != expectedLength {
 			t.Errorf("concatenation length mismatch for (%q, %q): got length %d, expected %d",
 				p.First, p.Second, len(concatenated), expectedLength)
